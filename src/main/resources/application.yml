@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: spring-boot-ai-kotlin
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: openai/gpt-4.1-nano
+        base-url: https://models.github.ai/inference
+        completions-path: /chat/completions
+    model:
+      chat: ollama
+    ollama:
+      chat:
+        options:
+          model: huggingface.co/rippertnt/HyperCLOVAX-SEED-Text-Instruct-0.5B-Q4_K_M-GGUF
+      init:
+        pull-model-strategy: when-missing
