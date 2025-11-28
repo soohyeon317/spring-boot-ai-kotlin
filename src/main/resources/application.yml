@@ -1,6 +1,7 @@
 spring:
   application:
     name: spring-boot-ai-kotlin
+    cli: true
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
