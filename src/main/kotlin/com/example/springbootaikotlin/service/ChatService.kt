@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-class SimpleChatService(
+class ChatService(
     private val chatClient: ChatClient
 ) {
 
@@ -20,4 +20,7 @@ class SimpleChatService(
             it.param(ChatMemory.CONVERSATION_ID, conversationId)
         }
     }
+
+    fun call(prompt: Prompt, conversationId: String) =
+        buildChatClientRequestSpec(prompt, conversationId).call().chatResponse()
 }

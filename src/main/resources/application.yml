@@ -1,7 +1,7 @@
 spring:
   application:
     name: spring-boot-ai-kotlin
-    cli: true
+    cli: false
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
@@ -18,3 +18,7 @@ spring:
           model: huggingface.co/rippertnt/HyperCLOVAX-SEED-Text-Instruct-0.5B-Q4_K_M-GGUF
       init:
         pull-model-strategy: when-missing
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: debug

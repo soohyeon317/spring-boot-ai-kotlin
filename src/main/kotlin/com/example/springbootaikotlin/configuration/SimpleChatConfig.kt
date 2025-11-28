@@ -1,7 +1,7 @@
 package com.example.springbootaikotlin.configuration
 
 import ch.qos.logback.classic.LoggerContext
-import com.example.springbootaikotlin.service.SimpleChatService
+import com.example.springbootaikotlin.service.ChatService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor
@@ -41,7 +41,7 @@ class SimpleChatConfig {
     @ConditionalOnProperty(prefix = "spring.application", name = ["cli"], havingValue = "true")
     fun cliMessageChatMemoryAdvisor(
         @Value("\${spring.application.name}") applicationName: String,
-        simpleChatService: SimpleChatService
+        chatService: ChatService
     ): CommandLineRunner {
         return CommandLineRunner {
             val context = LoggerFactory.getILoggerFactory() as LoggerContext
@@ -54,7 +54,7 @@ class SimpleChatConfig {
                 while (true) {
                     print("\nUser: ")
                     val userMessage = scanner.nextLine()
-                    simpleChatService.stream(Prompt.builder().content(userMessage).build(), "cli")
+                    chatService.stream(Prompt.builder().content(userMessage).build(), "cli")
                         .doFirst {
                             print("\nAssistant: ")
                         }
