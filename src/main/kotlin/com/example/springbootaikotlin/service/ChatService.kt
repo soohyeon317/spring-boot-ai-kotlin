@@ -15,12 +15,28 @@ class ChatService(
         return buildChatClientRequestSpec(prompt, conversationId).stream().content()
     }
 
+    fun call(prompt: Prompt, conversationId: String) =
+        buildChatClientRequestSpec(prompt, conversationId).call().chatResponse()
+
+    fun callEmotionEvaluation(
+        prompt: Prompt,
+        conversationId: String,
+    ): EmotionEvaluation {
+        return buildChatClientRequestSpec(prompt, conversationId).call().entity(EmotionEvaluation::class.java)!!
+    }
+
+    enum class Emotion {
+        VERY_NEGATIVE, NEGATIVE, NEUTRAL, POSITIVE, VERY_POSITIVE
+    }
+
+    data class EmotionEvaluation(
+        val emotion: Emotion,
+        val reason: List<String>,
+    )
+
     private fun buildChatClientRequestSpec(prompt: Prompt, conversationId: String): ChatClient.ChatClientRequestSpec {
         return chatClient.prompt(prompt).advisors {
             it.param(ChatMemory.CONVERSATION_ID, conversationId)
         }
     }
-
-    fun call(prompt: Prompt, conversationId: String) =
-        buildChatClientRequestSpec(prompt, conversationId).call().chatResponse()
 }

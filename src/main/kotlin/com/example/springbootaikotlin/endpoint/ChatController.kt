@@ -42,6 +42,11 @@ class ChatController(
         return chatService.stream(buildPrompt(promptBody), promptBody.conversationId!!)
     }
 
+    @PostMapping("/emotion", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun emotion(@RequestBody @Valid promptBody: PromptBody): ChatService.EmotionEvaluation {
+        return chatService.callEmotionEvaluation(buildPrompt(promptBody), promptBody.conversationId!!)
+    }
+
     companion object {
 
         private fun buildPrompt(promptBody: PromptBody): Prompt {
